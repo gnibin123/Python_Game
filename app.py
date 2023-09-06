@@ -2,6 +2,10 @@ from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
+# Custom IP and port
+custom_ip = '192.168.1.14'  # Replace with your custom IP address
+port = 5000  # Replace with your desired port number
+
 # Initial game state
 game_state = {
     'current_room': 'start',
@@ -53,4 +57,4 @@ def submit():
     return render_template('index.html', room=room, response=response)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host=custom_ip, port=port, debug=True)
