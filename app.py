@@ -1,3 +1,5 @@
+import sys
+import logging
 from flask import Flask, render_template, request
 
 app = Flask(__name__)
@@ -5,6 +7,16 @@ app = Flask(__name__)
 # Custom IP and port
 custom_ip = '192.168.1.14'  # Replace with your custom IP address
 port = 5000  # Replace with your desired port number
+
+
+# Configure logging to write to a log file
+log_file = '/opt/python_workspace/text_game/game.log'
+logging.basicConfig(
+    filename=log_file,
+    level=logging.DEBUG,  # Adjust the log level as needed
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
+
 
 # Initial game state
 game_state = {
@@ -55,6 +67,9 @@ def submit():
         response = 'I don\'t understand that command.'
 
     return render_template('index.html', room=room, response=response)
+
+sys.stdout = sys.stderr = open(log_file, 'a')
+
 
 if __name__ == '__main__':
     app.run(host=custom_ip, port=port, debug=True)
